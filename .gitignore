@@ -1,0 +1,63 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Go workspace file
+*.code-workspace
+
+# Editor specific files
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.vscode/
+.vscode/
+*.codekit
+*.codekit-cache
+*.swp
+*~
+
+# Log files
+*.log
+
+# Application specific files
+app.env
+.env
+config/*.env
+
+# Golang bin
+/bin
+/build
+
+# Go vendor dependencies
+vendor/
+
+# Docker files
+docker-compose.override.yml
+.dockerignore
+docker-compose.yaml
+docker-compose.yml
+Dockerfile
+
+# Postgres data
+data/
+
+# pgAdmin data
+pgadmin-data/
+pgadmin/
+
+# Generated files
+gen/
+
+# Ignoring node_modules if you use Node.js for frontend
+node_modules/
+
+# Cache and temporary files
+*.cache
+*.tmp
+*.temp
