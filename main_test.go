@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -106,5 +105,8 @@ func TestBuscaAlunoPorID(t *testing.T) {
 	r.ServeHTTP(resp, req)
 	var alunoMock models.Aluno
 	json.Unmarshal(resp.Body.Bytes(), &alunoMock)
-	fmt.Println(alunoMock.Nome)
+	assert.Equal(t, "Nome de Teste", alunoMock.Nome)
+	assert.Equal(t, "12312312300", alunoMock.CPF)
+	assert.Equal(t, "123456789", alunoMock.RG)
+	assert.Equal(t, http.StatusOK, resp.Code)
 }
