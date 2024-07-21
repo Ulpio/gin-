@@ -8,6 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func Saudacao(c *gin.Context) {
+	nome := c.Params.ByName("nome")
+	c.JSON(http.StatusOK, gin.H{"data": "Olá " + nome})
+}
+
 func ExibeTodosAlunos(c *gin.Context) {
 	var alunos []models.Aluno
 	database.DB.Find(&alunos)
@@ -27,7 +32,7 @@ func CriaNovoAluno(c *gin.Context) {
 		return
 	}
 	database.DB.Create(&aluno)
-	c.JSON(http.StatusOK, aluno)
+	c.JSON(http.StatusCreated, aluno)
 }
 
 func ExibeAlunoPorID(c *gin.Context) {
