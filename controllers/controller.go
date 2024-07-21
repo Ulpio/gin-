@@ -89,3 +89,15 @@ func GetAlunoPeloCPF(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, aluno) //Retorna o aluno encontrado
 }
+
+func ShowIndex(c *gin.Context) {
+	var alunos []models.Aluno
+	database.DB.Find(&alunos)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"alunos": alunos,
+	})
+}
+
+func Rota404(c *gin.Context) {
+	c.HTML(http.StatusNotFound, "404.html", nil)
+}
