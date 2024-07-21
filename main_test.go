@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -109,4 +110,34 @@ func TestBuscaAlunoPorID(t *testing.T) {
 	assert.Equal(t, "12312312300", alunoMock.CPF)
 	assert.Equal(t, "123456789", alunoMock.RG)
 	assert.Equal(t, http.StatusOK, resp.Code)
+}
+
+func TestDeletaAlunoPorID(t *testing.T) {
+	database.ConnectDB()
+	CriaAlunoMock()
+	r := SetupTestRoutes()
+	r.DELETE("/alunos/:id", controllers.DeleteAluno)
+	path := "/alunos/" + strconv.Itoa(ID)
+	req, _ := http.NewRequest("DELETE", path, nil)
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+	assert.Equal(t, http.StatusOK, resp.Code)
+}
+
+func TestEditaAluno(t *testing.T) {
+	database.ConnectDB()
+	CriaAlunoMock()
+	defer DeletaAlunoMock()
+	r := SetupTestRoutes()
+	r.PATCH("/alunos/:id", controllers.EditaAluno)
+	aluno := models.Aluno{Nome: "Nome de Teste", CPF: "42312312316", RG: "512456701"}
+	valorJson, _ := json.Marshal(aluno)
+	path := "/alunos/" + strconv.Itoa(ID)
+	req, _ := http.NewRequest("PATCH", path, bytes.NewBuffer(valorJson))
+	resp := httptest.NewRecorder()
+	r.ServeHTTP(resp, req)
+	var alunoMock models.Aluno
+	json.Unmarshal(resp.Body.Bytes(), &alunoMock)
+	assert.Equal(t, "42312312316", alunoMock.CPF)
+	assert.Equal(t, "512456701", alunoMock.RG)
 }
